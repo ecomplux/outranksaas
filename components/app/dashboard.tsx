@@ -87,13 +87,17 @@ type View =
 
 const SettingsView = () => (
   <>
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-4 mb-6 gap-4 sm:gap-0">
-      <div className="flex flex-wrap items-center gap-2"> {/* Made this flex-wrap for smaller screens */}
-        <Button variant="default">Articles</Button>
-        <Button variant="ghost">Keywords</Button>
-        <Button variant="ghost">Business</Button>
-        <Button variant="ghost">Competitors</Button>
-        <Button variant="ghost">Blog</Button>
+    <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-4 mb-6 gap-4 sm:gap-0">
+      {/* Container for sub-navigation buttons, matching screenshot layout */}
+      <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:flex-wrap sm:gap-2">
+        <Button variant="default" className="w-full sm:w-auto">Articles</Button> {/* Full width on mobile, auto on sm+ */}
+        {/* Wrapper for the rest of the buttons to allow them to wrap naturally */}
+        <div className="flex flex-wrap gap-2">
+          <Button variant="ghost">Keywords</Button>
+          <Button variant="ghost">Business</Button>
+          <Button variant="ghost">Competitors</Button>
+          <Button variant="ghost">Blog</Button>
+        </div>
       </div>
     </div>
     <div className="grid gap-6 lg:grid-cols-3">
@@ -151,9 +155,9 @@ const SettingsView = () => (
     </Card>
     <div className="mt-6">
       <h2 className="text-xl font-semibold mb-4">Image Style</h2>
-      <div className="flex space-x-4 overflow-x-auto pb-4">
+      <div className="w-full flex flex-col items-center gap-4 sm:flex-row sm:w-auto sm:overflow-x-auto sm:pb-4 sm:space-x-4"> {/* Ensure full width on mobile, then auto for sm scroll. Stack on mobile, scroll on sm+. */}
         {imageStyles.map((style) => (
-          <Card key={style.name} className={`min-w-[200px] w-[200px] cursor-pointer transition-all ${style.selected ? "ring-2 ring-primary shadow-lg" : "hover:shadow-md"}`}>
+          <Card key={style.name} className={`w-full max-w-[220px] sm:min-w-[200px] sm:w-[200px] cursor-pointer transition-all ${style.selected ? "ring-2 ring-primary shadow-lg" : "hover:shadow-md"}`}> {/* Responsive width for mobile */}
             <CardContent className="p-0">
               <div className="relative w-full h-32"><Image src={style.imageSrc} alt={style.name} layout="fill" objectFit="cover" className="rounded-t-lg"/></div>
               <div className="p-3">
@@ -438,7 +442,7 @@ export default function DashboardLayout() {
           <Link href="/" className="flex items-center gap-2 font-semibold text-lg">Outrank</Link>
         </header>
         
-        <main className="flex-1 p-6 space-y-6">
+        <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
           {renderView()}
         </main>
       </div>
